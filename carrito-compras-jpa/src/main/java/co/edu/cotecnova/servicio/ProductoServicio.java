@@ -17,10 +17,16 @@ public class ProductoServicio {
     private ProductoRepositorio productoRepositorio;
 
     public List<Producto> listarProductos(){
+
         return productoRepositorio.findAll();
     }
 
+    public Producto obtenerProducto(Integer id){
+        return listarProductos().stream().filter(p->p.getId().equals(id)).findAny().orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("La id %d no encontrada",id)));
+    }
+
     public Producto crearProducto(Producto producto){
+
         return productoRepositorio.save(producto);
     }
 
@@ -31,5 +37,10 @@ public class ProductoServicio {
         }else{
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("El producto con id %d no fue encontrado.", id));
         }
+    }
+
+    public void productoEliminar(Integer id){
+        Producto eliminar=obtenerProducto(id);
+        listarProductos().remove(eliminar);
     }
 }
