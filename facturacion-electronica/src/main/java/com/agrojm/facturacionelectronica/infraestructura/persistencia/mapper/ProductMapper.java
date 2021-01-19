@@ -18,7 +18,7 @@ public interface ProductMapper {
             @Mapping(source = "nombre", target = "name"),
             @Mapping(source = "precio", target = "price"),
             @Mapping(source = "estado", target = "active"),
-            @Mapping(source = "fechaCreacion", target = "creationDate"),
+            @Mapping(source = "fechaCreacion", target = "creationDate", expression = "java(new java.util.Date())"),
     })
     Product toProduct(Producto producto);
     List<Product> toProducts(List<Producto> productos);
