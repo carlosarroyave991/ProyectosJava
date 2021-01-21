@@ -1,6 +1,5 @@
 package com.agrojm.facturacionelectronica.infraestructura.persistencia.mapper;
 
-
 import com.agrojm.facturacionelectronica.dominio.modelo.Product;
 import com.agrojm.facturacionelectronica.infraestructura.persistencia.entidades.Producto;
 import org.mapstruct.InheritInverseConfiguration;
@@ -18,7 +17,7 @@ public interface ProductMapper {
             @Mapping(source = "nombre", target = "name"),
             @Mapping(source = "precio", target = "price"),
             @Mapping(source = "estado", target = "active"),
-            @Mapping(source = "fechaCreacion", target = "creationDate", expression = "java(new java.util.Date())"),
+            @Mapping(source = "fechaCreacion", target = "creationDate"),
     })
     Product toProduct(Producto producto);
     List<Product> toProducts(List<Producto> productos);

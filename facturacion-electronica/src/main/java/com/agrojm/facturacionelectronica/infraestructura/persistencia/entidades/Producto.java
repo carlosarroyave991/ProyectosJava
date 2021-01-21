@@ -1,28 +1,21 @@
 package com.agrojm.facturacionelectronica.infraestructura.persistencia.entidades;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
-@Table(name = "Productos")
+@Table(name = "productos")
 public class Producto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private Integer codigo;
     private String nombre;
     private Double precio;
     private Boolean estado;
 
-    @Column(name ="fecha_creacion")
+    @Column(name = "fecha_creacion")
     private LocalDateTime fechaCreacion;
 
     public Integer getId() {

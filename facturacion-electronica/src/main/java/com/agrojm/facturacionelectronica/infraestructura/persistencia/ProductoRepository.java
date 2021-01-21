@@ -1,6 +1,5 @@
 package com.agrojm.facturacionelectronica.infraestructura.persistencia;
 
-
 import com.agrojm.facturacionelectronica.dominio.modelo.Product;
 import com.agrojm.facturacionelectronica.dominio.repositorio.ProductRepository;
 import com.agrojm.facturacionelectronica.infraestructura.persistencia.crud.ProductoCrudRepositorio;
@@ -13,6 +12,7 @@ import java.util.Optional;
 
 @Repository
 public class ProductoRepository implements ProductRepository {
+
     private ProductoCrudRepositorio productoCrudRepositorio;
     private ProductMapper productMapper;
 
@@ -22,7 +22,7 @@ public class ProductoRepository implements ProductRepository {
     }
 
     @Override
-    public List<Product> getAll(){
+    public List<Product> getAll() {
         List<Producto> productos = (List<Producto>) productoCrudRepositorio.findAll();
         return productMapper.toProducts(productos);
     }
@@ -51,8 +51,8 @@ public class ProductoRepository implements ProductRepository {
     }
 
     @Override
-    public Optional<List<Product>> findByName(String name){
-        Optional<List<Producto>> productos = productoCrudRepositorio.findByNombre(name);
-        return productos.map(prod -> productMapper.toProducts(prod));
+    public Optional<Product> findByCode(int code) {
+        Optional<Producto> producto = productoCrudRepositorio.findByCodigo(code);
+        return producto.map(prod -> productMapper.toProduct(prod));
     }
 }

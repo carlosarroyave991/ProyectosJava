@@ -1,29 +1,40 @@
 package com.agrojm.facturacionelectronica.dominio.modelo;
 
-
 import java.time.LocalDateTime;
 
 public class Product {
-    private Integer productId;
-    private Integer code;
+    private int productId;
+    private int code;
     private String name;
-    private Double price;
-    private Boolean active;
+    private double price;
+    private boolean active;
     private LocalDateTime creationDate;
 
-    public Integer getProductId() {
+    public Product() {
+    }
+
+    public Product(int productId, int code, String name, double price, boolean active, LocalDateTime creationDate) {
+        this.productId = productId;
+        this.code = code;
+        this.name = name;
+        this.price = price;
+        this.active = active;
+        this.creationDate = creationDate;
+    }
+
+    public int getProductId() {
         return productId;
     }
 
-    public void setProductId(Integer productId) {
+    public void setProductId(int productId) {
         this.productId = productId;
     }
 
-    public Integer getCode() {
+    public int getCode() {
         return code;
     }
 
-    public void setCode(Integer code) {
+    public void setCode(int code) {
         this.code = code;
     }
 
@@ -35,19 +46,19 @@ public class Product {
         this.name = name;
     }
 
-    public Double getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
-    public Boolean getActive() {
+    public boolean isActive() {
         return active;
     }
 
-    public void setActive(Boolean active) {
+    public void setActive(boolean active) {
         this.active = active;
     }
 

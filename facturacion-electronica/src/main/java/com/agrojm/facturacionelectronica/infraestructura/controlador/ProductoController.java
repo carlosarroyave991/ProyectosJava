@@ -1,39 +1,60 @@
 package com.agrojm.facturacionelectronica.infraestructura.controlador;
 
-
+import com.agrojm.facturacionelectronica.aplicacion.comando.ComandoProduct;
+import com.agrojm.facturacionelectronica.aplicacion.manejadores.product.*;
+import com.agrojm.facturacionelectronica.aplicacion.manejadores.product.*;
 import com.agrojm.facturacionelectronica.dominio.modelo.Product;
-import com.agrojm.facturacionelectronica.dominio.servicio.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/products")
 public class ProductoController {
-    private ProductService productService;
+    private ManejadorCrearProduct manejadorCrearProduct;
+    private ManejadorActualizarProduct manejadorActualizarProduct;
+    private ManejadorEliminarProduct manejadorEliminarProduct;
+    private ManejadorListarTodosProduct manejadorListarTodosProduct;
+    private ManejadorListarPorIdProduct manejadorListarPorIdProduct;
 
-    public ProductoController(ProductService productService){
-        this.productService = productService;
+    public ProductoController(ManejadorCrearProduct manejadorCrearProduct, ManejadorActualizarProduct manejadorActualizarProduct, ManejadorEliminarProduct manejadorEliminarProduct, ManejadorListarTodosProduct manejadorListarTodosProduct, ManejadorListarPorIdProduct manejadorListarPorIdProduct) {
+        this.manejadorCrearProduct = manejadorCrearProduct;
+        this.manejadorActualizarProduct = manejadorActualizarProduct;
+        this.manejadorEliminarProduct = manejadorEliminarProduct;
+        this.manejadorListarTodosProduct = manejadorListarTodosProduct;
+        this.manejadorListarPorIdProduct = manejadorListarPorIdProduct;
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity<List<Product>> getAll(){
-        return new ResponseEntity<>(productService.getAll(), HttpStatus.OK);
+        return new ResponseEntity<>(manejadorListarTodosProduct.ejecutar(), HttpStatus.OK);
     }
 
-    @GetMapping("/save")
-    public ResponseEntity<Product> save(@RequestBody Product product){
-        return new ResponseEntity<>(productService.save(product), HttpStatus.CREATED);
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<Product>> findById(@PathVariable("id") int productId){
+        return new ResponseEntity<>(manejadorListarPorIdProduct.ejecutar(productId), HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity delete(@PathVariable("id") int productId){
-        if(productService.delete(productId)){
-            return new ResponseEntity(HttpStatus.OK);
-        }
-        return new ResponseEntity(HttpStatus.NOT_FOUND);
+    @PostMapping
+    public ResponseEntity<Product> save(@RequestBody ComandoProduct comandoProduct){
+        comandoProduct.setActive(true);
+        comandoProduct.setCreationDate(LocalDateTime.now());
+        return new ResponseEntity<>(manejadorCrearProduct.ejecutar(comandoProduct), HttpStatus.CREATED);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Product> update(@RequestBody ComandoProduct comandoProduct,@PathVariable("id") int productId){
+        comandoProduct.setProductId(productId);
+        return new ResponseEntity<>(manejadorActualizarProduct.ejecutar(comandoProduct, productId), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable("id") int productId){
+        manejadorEliminarProduct.ejecutar(productId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
