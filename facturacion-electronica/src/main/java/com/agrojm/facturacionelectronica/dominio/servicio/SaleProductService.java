@@ -1,6 +1,6 @@
 package com.agrojm.facturacionelectronica.dominio.servicio;
 
-import com.agrojm.facturacionelectronica.dominio.excepion.SaleProductException;
+import com.agrojm.facturacionelectronica.dominio.excepcion.SaleProductException;
 import com.agrojm.facturacionelectronica.dominio.modelo.SaleProduct;
 import com.agrojm.facturacionelectronica.dominio.repositorio.SaleProductRepository;
 import org.springframework.stereotype.Service;

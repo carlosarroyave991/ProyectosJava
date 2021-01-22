@@ -1,9 +1,9 @@
 package com.agrojm.facturacionelectronica.infraestructura.error;
 
-import com.agrojm.facturacionelectronica.dominio.excepion.ClientException;
-import com.agrojm.facturacionelectronica.dominio.excepion.ProductExcepcion;
-import com.agrojm.facturacionelectronica.dominio.excepion.SaleException;
-import com.agrojm.facturacionelectronica.dominio.excepion.SaleProductException;
+import com.agrojm.facturacionelectronica.dominio.excepcion.ClientException;
+import com.agrojm.facturacionelectronica.dominio.excepcion.ProductExcepcion;
+import com.agrojm.facturacionelectronica.dominio.excepcion.SaleException;
+import com.agrojm.facturacionelectronica.dominio.excepcion.SaleProductException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

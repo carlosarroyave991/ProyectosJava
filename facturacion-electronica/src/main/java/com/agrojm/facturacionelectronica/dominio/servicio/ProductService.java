@@ -1,8 +1,10 @@
 package com.agrojm.facturacionelectronica.dominio.servicio;
 
-import com.agrojm.facturacionelectronica.dominio.excepion.ProductExcepcion;
+import com.agrojm.facturacionelectronica.dominio.excepcion.ProductExcepcion;
 import com.agrojm.facturacionelectronica.dominio.modelo.Product;
 import com.agrojm.facturacionelectronica.dominio.repositorio.ProductRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -57,5 +59,9 @@ public class ProductService {
         }else{
             throw new ProductExcepcion(ID_NO_ENCONTRADO);
         }
+    }
+
+    public Page<Product> findAll(Pageable pageable){
+        return productRepository.findAll(pageable);
     }
 }

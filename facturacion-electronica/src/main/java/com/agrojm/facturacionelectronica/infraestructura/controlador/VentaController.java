@@ -2,8 +2,10 @@ package com.agrojm.facturacionelectronica.infraestructura.controlador;
 
 import com.agrojm.facturacionelectronica.aplicacion.comando.ComandoSale;
 import com.agrojm.facturacionelectronica.aplicacion.manejadores.sale.*;
-import com.agrojm.facturacionelectronica.aplicacion.manejadores.sale.*;
 import com.agrojm.facturacionelectronica.dominio.modelo.Sale;
+import com.agrojm.facturacionelectronica.aplicacion.manejadores.sale.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,18 +22,25 @@ public class VentaController {
     private ManejadorEliminarSale manejadorEliminarSale;
     private ManejadorListarTodosSale manejadorListarTodosSale;
     private ManejadorListarPorIdSale manejadorListarPorIdSale;
+    private ManejadorPaginadorSale manejadorPaginadorSale;
 
-    public VentaController(ManejadorCrearSale manejadorCrearSale, ManejadorActualizarSale manejadorActualizarSale, ManejadorEliminarSale manejadorEliminarSale, ManejadorListarTodosSale manejadorListarTodosSale, ManejadorListarPorIdSale manejadorListarPorIdSale) {
+    public VentaController(ManejadorCrearSale manejadorCrearSale, ManejadorActualizarSale manejadorActualizarSale, ManejadorEliminarSale manejadorEliminarSale, ManejadorListarTodosSale manejadorListarTodosSale, ManejadorListarPorIdSale manejadorListarPorIdSale, ManejadorPaginadorSale manejadorPaginadorSale) {
         this.manejadorCrearSale = manejadorCrearSale;
         this.manejadorActualizarSale = manejadorActualizarSale;
         this.manejadorEliminarSale = manejadorEliminarSale;
         this.manejadorListarTodosSale = manejadorListarTodosSale;
         this.manejadorListarPorIdSale = manejadorListarPorIdSale;
+        this.manejadorPaginadorSale = manejadorPaginadorSale;
     }
 
     @GetMapping
     public ResponseEntity<List<Sale>> getAll(){
         return new ResponseEntity<>(manejadorListarTodosSale.ejecutar(), HttpStatus.OK);
+    }
+
+    @GetMapping("/paginador")
+    public ResponseEntity<Page<Sale>> findAll(Pageable pageable){
+        return new ResponseEntity<>(manejadorPaginadorSale.ejecutar(pageable), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

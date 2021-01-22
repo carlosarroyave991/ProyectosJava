@@ -1,6 +1,8 @@
 package com.agrojm.facturacionelectronica.dominio.repositorio;
 
 import com.agrojm.facturacionelectronica.dominio.modelo.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,4 +14,5 @@ public interface ProductRepository {
     void delete(int productId);
     Product update(Product product);
     Optional<Product> findByCode(int code);
+    Page<Product> findAll(Pageable pageable);
 }

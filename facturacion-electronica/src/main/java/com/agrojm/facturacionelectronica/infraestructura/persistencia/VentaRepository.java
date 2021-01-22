@@ -5,6 +5,8 @@ import com.agrojm.facturacionelectronica.dominio.repositorio.SaleRepository;
 import com.agrojm.facturacionelectronica.infraestructura.persistencia.crud.VentaCrudRepositorio;
 import com.agrojm.facturacionelectronica.infraestructura.persistencia.entidades.Venta;
 import com.agrojm.facturacionelectronica.infraestructura.persistencia.mapper.SaleMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -48,5 +50,10 @@ public class VentaRepository implements SaleRepository {
     @Override
     public void delete(int saleId) {
         ventaCrudRepositorio.deleteById(saleId);
+    }
+
+    @Override
+    public Page<Sale> findAll(Pageable pageable) {
+        return ventaCrudRepositorio.findAll(pageable).map(venta -> saleMapper.toSale(venta));
     }
 }
